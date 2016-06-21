@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Borris\core;
+namespace Velocious\core;
 
-use Borris\core\Render;
-use Borris\core\MimeTypes;
-use Borris\core\Exception;
+use Velocious\core\Render;
+use Velocious\core\MimeTypes;
+use Velocious\core\Exception;
 
 class Router {
     
