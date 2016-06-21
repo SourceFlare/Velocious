@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Borris\core;
+namespace Velocious\core;
 
 
 class Exception {
