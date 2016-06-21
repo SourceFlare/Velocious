@@ -1,7 +1,7 @@
 <?php spl_autoload_register(function($className)
 {
 	
-    $class = __DIR__ . '/../' . str_replace("Borris\\", '', $className) . '.php';
+    $class = __DIR__ . '/../' . str_replace("Velocious\\", '', $className) . '.php';
 	$class = str_replace('\\', '/', $class);
     
     # Check if Class Exists & Include
