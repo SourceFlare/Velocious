@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-use Borris\core\Render;
-use Borris\core\MimeTypes;
-use Borris\core\Exception;
+namespace Velocious\config;
+
+use Velocious\core\Render;
+use Velocious\core\MimeTypes;
+use Velocious\core\Exception;
 
 
 /**
