@@ -11,7 +11,7 @@ use Velocious\core\Exception;
  * Reading a Blog Route - passes in a pageid, 
  * articleid, and mode
  */
-$route["/blog/{id}/"] = function ($state) : bool {
+$route["/blog/{id}/"] = function (array $state) : bool {
     
     $data = [
         'response' => [
@@ -36,7 +36,7 @@ $route["/blog/{id}/"] = function ($state) : bool {
  * Reading a Blog Route - passes in a pageid, 
  * articleid, and mode
  */
-$route["/blog/{page_id}/{id}/{mode}/"] = function ($state) : bool {
+$route["/blog/{page_id}/{id}/{mode}/"] = function (array $state) : bool {
     
     $data = [
         'response' => [
