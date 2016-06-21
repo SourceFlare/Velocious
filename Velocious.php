@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Borris;
+namespace Velocious;
 
-use Borris\core\Router;
-use Borris\core\Exception;
+use Velocious\core\Router;
+use Velocious\core\Exception;
 
 require_once(__DIR__ . "/core/autoload.php");
 
