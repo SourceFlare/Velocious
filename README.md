@@ -3,3 +3,5 @@
 
 >Velocious is by it's nature designed to offer up streamlined APIs and small operations such as logging, or sending an email, where having a full-blown MVC framework is not required.
 
+### Compatability
+>Velocious has been written specifically for PHP 7.0 and above.
