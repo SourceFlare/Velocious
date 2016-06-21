@@ -7,7 +7,7 @@ Velocious is by it's nature designed to offer up streamlined APIs and small oper
 You will need to re-write your urls using NGiNX's rewrite syntax, like so :-
 
       location / {
-        rewrite ^/(.*)$   Velocious.php?url=$1  last;
+        rewrite ^(.*)$   Velocious.php?url=$1  last;
       }
 
 ### Compatability
