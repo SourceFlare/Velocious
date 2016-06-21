@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Borris\core;
-use Borris\core\Exception;
+namespace Velocious\core;
+
+use Velocious\core\Exception;
 
 
 class MimeTypes {
