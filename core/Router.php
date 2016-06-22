@@ -5,6 +5,8 @@ namespace Velocious\core;
 use Velocious\core\Render;
 use Velocious\core\MimeTypes;
 use Velocious\core\Exception;
+use Velocious\core\Rules;
+
 
 class Router {
     
@@ -20,18 +22,18 @@ class Router {
     public static function find_route (string $url) : bool {
         
         # Load Routes from Config File
-        if(!require_once(__DIR__ . "/../config/Routes.php"))
-            Exception::cast ("Error 500 - Could not load routes file.", 500);
+        if(!require_once(__DIR__ . "/../routes/config.php"))
+            Exception::cast ("Could not load routes file.", 500);
         
         # Run through routes and find a match
-        foreach ($route as $r => $f) {
+        foreach ($route as $r => $obj) {
             
             # Get the preg_math patterns
             $patterns = self::build_matching_patterns ($r);
             
             # Run both patterns
-            $result1 = preg_match($patterns['scalar_pattern'], $r, $scalars);
-            $result2 = preg_match($patterns['url_pattern'], $url, $parts);
+            $result1 = preg_match($patterns['scalar_pattern'], $r,   $scalars);
+            $result2 = preg_match($patterns['url_pattern'],    $url, $parts);
             
             # Check that match ws ok
             if (!$result1 or !$result2)
@@ -44,8 +46,11 @@ class Router {
                 $i++;
             }
             
+            # Check for governance compliance
+            Rules::govern($obj);
+            
             # Put route into state
-            self::$route = $f;
+            self::$route = $obj;
             
             return true;
         }
@@ -63,7 +68,7 @@ class Router {
      */
     final protected static function build_matching_patterns (string $abstracted_url) : array {
             # Build a pattern for the Route
-            $url_pattern = '/' . preg_replace(
+            $url_pattern = '/^' . preg_replace(
                 "/{([a-zA-Z0-9\-\_\%\&\;]*)}/i", 
                 "([a-zA-Z0-9\-\_\%\&\;]*)",
                 str_replace('/', '\/', $abstracted_url)
@@ -87,12 +92,14 @@ class Router {
      * @return object closure
      */
     final public static function execute () {
-        $action = self::$route;
         
         # Check that route is available
         if(!isset(self::$route))
             Exception::cast ("Could not execute route!", 500);
-        
+		
+        # Retrieve controller from route
+        $action = self::$route['Controller'];
+            
         # Execute route!
         $action(self::$state);
     }
