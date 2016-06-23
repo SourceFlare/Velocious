@@ -12,7 +12,7 @@ $route["/{page_id}/{blog_id}/"] = [
 
 	"Rules" => [
 		"Allowed_Request_Types" => ["POST", "GET"], 
-		"Allowed_Remote_Addr" => ["194.247.236.46", "localhost", "::1"]],
+		"Allowed_Remote_Addr" => ["localhost", "::1"]],
 		
 	"Controller"  => function (array $state) : bool {
 	    return Render::json([
@@ -31,7 +31,7 @@ $route["/{page_id}/{blog_id}/delete/"] = [
 
 	"Rules" => [
 		"Allowed_Request_Types" => ["POST"],
-		"Allowed_Remote_Addr"   => ["194.247.236.46", "localhost", "::1"]],
+		"Allowed_Remote_Addr"   => ["localhost", "::1"]],
 		
 	"Controller"  => function (array $state) : bool {
 	    return Render::json([
