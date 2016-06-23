@@ -11,15 +11,14 @@ use Velocious\core\Exception;
  * Index Route - Serves up a static HTML files from
  * the ./html/ folder.
  */
-$route["/{id}"] = [
+$route["/"] = [
     
     "Rules" => [
-        "Allowed_Request_Types" => ["GET"],
+        "Allowed_Request_Types" => ["GET", "POST"],
         "Allowed_Remote_Addr"   => ["localhost", "::1"]],
     
     "Controller"  => function (array $state) : bool {
-        Render::file("./html/index.html", "html");
-        return true;
+        return Render::file("./html/index.html", "html");
     }
 ];
 
@@ -50,17 +49,17 @@ $route["/blog/{page_id}/{blog_id}/"] = [
  * Now we use a service within a route to do 
  * some grunt work and pass to the client.
  */
-$route["/string-reverse/{string}/"] = [
+$route["/reverse-string/"] = [
 
     "Rules" => [
-        "Allowed_Request_Types" => ["GET"],
+        "Allowed_Request_Types" => ["POST"],
         "Allowed_Remote_Addr"   => ["localhost", "::1"]],
         
     "Controller"  => function (array $state) : bool {
         return Render::json([
             'response' => [
-                'string'          => $state['string'],
-                'reversed_string' => (new \Velocious\services\ReverseString)->commit($state['string'])
+                'string'          => $state['my_string'],
+                'reversed_string' => (new \Velocious\services\ReverseString)->commit($state['my_string'])
             ]
         ]);
     }
