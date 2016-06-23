@@ -40,4 +40,16 @@ class MimeTypes {
             return true;
         return false;
     }
+    
+
+    /**
+     * Sets the appropriate document mime type via function call
+     */
+    public static function json       () { self::set_mime_type ("json");       }
+    public static function xml        () { self::set_mime_type ("xml");        }
+    public static function html       () { self::set_mime_type ("html");       }
+    public static function css        () { self::set_mime_type ("css");        }
+    public static function javascript () { self::set_mime_type ("javascript"); }
+    public static function text       () { self::set_mime_type ("text");       }
+    public static function plain      () { self::set_mime_type ("plain");      }
 }
