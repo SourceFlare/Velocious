@@ -1,6 +1,6 @@
 # Velocious
 
-[![Code Climate](https://codeclimate.com/github/markgreenall/Velocious/badges/gpa.svg)](https://codeclimate.com/github/markgreenall/Velocious)
+[![Code Climate](https://codeclimate.com/github/markgreenall/Velocious/badges/gpa.svg)](https://codeclimate.com/github/markgreenall/Velocious) [![Issue Count](https://codeclimate.com/github/markgreenall/Velocious/badges/issue_count.svg)](https://codeclimate.com/github/markgreenall/Velocious)
 
 Fast/Barebones Closure-Based RESTful Framework.  This framework is so lightweight that it doesn't even come with an ORM, Security Classes, or other Helpers; it comprises of a router, mime type detector, and a dispatcher - that is it.
 
