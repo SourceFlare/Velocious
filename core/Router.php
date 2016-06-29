@@ -89,7 +89,7 @@ class Router {
             $scalarPattern = str_replace(
                 "([a-zA-Z0-9\-\_\%\&\;]*)", 
                 "{([a-zA-Z0-9\-\_\%\&\;]*)\}",
-                $url_pattern
+                $urlPattern
             );
             
             return [
