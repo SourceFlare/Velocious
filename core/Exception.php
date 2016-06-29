@@ -9,11 +9,10 @@ class Exception {
      * @param string $message
      * @param int $response_code
      */
-    public static function cast ($message, $responseCode) {
+    final public static function cast ($message, $responseCode) {
         http_response_code($responseCode);
         header("Content-type: text/plain");
-        echo "Error $responseCode.\n\n";
-        echo "$message";
-        die();
+        echo "Error $responseCode.\n\n$message\n\n";
+        throw new \Exception($message);
     }
 }
