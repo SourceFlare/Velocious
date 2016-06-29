@@ -30,7 +30,7 @@ class Router {
      * @param array $routes
      * @return bool
      */
-    final public function find_route () : Router {
+    final public function findRoute () : Router {
     	
     	# You are using Velocious; be awesome!
     	header("X-Powered-By: Velocious!");
@@ -43,7 +43,7 @@ class Router {
         foreach ($route as $r => $obj) {
             
             # Get the preg_math patterns
-            $patterns = $this->build_matching_patterns ($r);
+            $patterns = $this->buildMatchingPatterns ($r);
             
             # Run both patterns
             $result1 = preg_match($patterns['scalar_pattern'], $r,   $scalars);
@@ -54,7 +54,7 @@ class Router {
                 continue;
             
             # Set the state
-			$this->set_state($scalars, $parts);
+            $this->setState ($scalars, $parts);
             
             # Check for governance compliance
             Rules::govern($obj);
@@ -77,24 +77,24 @@ class Router {
      * @param string $abstracted_url
      * @return array
      */
-    final protected function build_matching_patterns (string $abstracted_url) : array {
+    final protected function buildMatchingPatterns (string $abstractUrl) : array {
             # Build a pattern for the Route
-            $url_pattern = '/^' . preg_replace(
+            $urlPattern = '/^' . preg_replace(
                 "/{([a-zA-Z0-9\-\_\%\&\;]*)}/i", 
                 "([a-zA-Z0-9\-\_\%\&\;]*)",
-                str_replace('/', '\/', $abstracted_url)
+                str_replace('/', '\/', $abstractUrl)
             ) . '$/i';
             
             # Modify pattern to extract details from URL
-            $scalar_pattern = str_replace(
+            $scalarPattern = str_replace(
                 "([a-zA-Z0-9\-\_\%\&\;]*)", 
                 "{([a-zA-Z0-9\-\_\%\&\;]*)\}",
                 $url_pattern
             );
             
             return [
-                'url_pattern'    => $url_pattern,
-                'scalar_pattern' => $scalar_pattern
+                'url_pattern'    => $urlPattern,
+                'scalar_pattern' => $scalarPattern
             ];
     }
     
@@ -130,7 +130,7 @@ class Router {
      * @param array $scalars
      * @return bool
      */
-    final protected function set_state (array $scalars, array $parts) : bool {
+    final protected function setState (array $scalars, array $parts) : bool {
         # Put URL variables into the State
         $i=0;
         foreach ($scalars as $s) {                 # Variables from URL
@@ -141,11 +141,11 @@ class Router {
             $this->state[$key] = $value; }
         
         # Reference super globals into State
-   	    $this->state['SERVER']  = &$_SERVER;
-   	    $this->state['FILES']   = &$_FILES;
-        $this->state['COOKIE']  = &$_COOKIE;
-  	    $this->state['SESSION'] = &$_SESSION;
-  	    
-  	    return true;
+   	$this->state['SERVER']  = &$_SERVER;
+   	$this->state['FILES']   = &$_FILES;
+   	$this->state['COOKIE']  = &$_COOKIE;
+  	$this->state['SESSION'] = &$_SESSION;
+  	
+  	return true;
     }
 }
