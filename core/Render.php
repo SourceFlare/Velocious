@@ -23,8 +23,8 @@ class Render {
      * @param string $json
      * @return bool
      */
-    public static function file (string $filename, string $mime_type) : bool {
-        MimeTypes::set_mime_type($mime_type);
+    public static function file (string $filename, string $mimeType) : bool {
+        MimeTypes::setMimeType($mimeType);
         echo file_get_contents($filename);
         return true;
     }
