@@ -8,7 +8,7 @@ use Velocious\core\Exception;
 
 class Render {
     /**
-     * Renders view in JSON
+     * Renders in JSON
      * @param string $json
      * @return bool
      */
@@ -19,13 +19,42 @@ class Render {
     }
     
     /**
-     * Renders view in JSON
+     * Renders in XML
      * @param string $json
      * @return bool
      */
-    public static function file (string $filename, string $mimeType) : bool {
-        MimeTypes::setMimeType($mimeType);
-        echo file_get_contents($filename);
+    public static function xml (array $data) : bool {
+        MimeTypes::xml();
+        echo xmlrpc_encode ($data);
+        return true;
+    }
+    
+    /**
+     * Renders nominated file
+     * @param string $json
+     * @return bool
+     */
+    public static function file (string $filename, string $mime_type) : bool {
+        MimeTypes::set_mime_type($mime_type);
+        
+        # Strips directory climbers
+        $filename = str_replace ("../", "", $filename);
+        $filename = str_replace ("./", "", $filename);
+        $filename = ltrim ($filename, "/");
+        
+        # Check file exists
+        if (!file_exists($filename))
+        	Exception::cast("Could not find requested file", 404);
+        
+        # Load file
+        $content = file_get_contents($filename);
+        
+        # Check loaded
+        if (empty($content))
+        	Exception::cast("Requested file was empty.", 404);
+        
+        # Return HTML to browser
+        echo $content;
         return true;
     }
 }
