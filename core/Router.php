@@ -21,7 +21,7 @@ class Router {
     public function __construct (string $url) {
     	if (!isset($url))
     		Exception::cast("Error! No url was given.\n\nYour server rewriting configuration may be incorrect.\n\nPlease check and try again.", 500);
-    	$this->state['requested_url'] = $url;
+    	$this->state['requested_url'] = urldecode($url);
     }
     
     /**
@@ -54,7 +54,7 @@ class Router {
                 continue;
             
             # Set the state
-            $this->setState ($scalars, $parts);
+			$this->setState($scalars, $parts);
             
             # Check for governance compliance
             Rules::govern($obj);
@@ -77,24 +77,24 @@ class Router {
      * @param string $abstracted_url
      * @return array
      */
-    final protected function buildMatchingPatterns (string $abstractUrl) : array {
+    final protected function buildMatchingPatterns (string $abstracted_url) : array {
             # Build a pattern for the Route
-            $urlPattern = '/^' . preg_replace(
-                "/{([a-zA-Z0-9\-\_\%\&\;]*)}/i", 
-                "([a-zA-Z0-9\-\_\%\&\;]*)",
-                str_replace('/', '\/', $abstractUrl)
+            $url_pattern = '/^' . preg_replace(
+                "/{([a-zA-Z0-9\.\-\_\%\&\;]*)}/i", 
+                "([a-zA-Z0-9\.\-\_\%\&\;]*)",
+                str_replace('/', '\/', $abstracted_url)
             ) . '$/i';
             
             # Modify pattern to extract details from URL
-            $scalarPattern = str_replace(
-                "([a-zA-Z0-9\-\_\%\&\;]*)", 
-                "{([a-zA-Z0-9\-\_\%\&\;]*)\}",
-                $urlPattern
+            $scalar_pattern = str_replace(
+                "([a-zA-Z0-9\.\-\_\%\&\;]*)", 
+                "{([a-zA-Z0-9\.\-\_\%\&\;]*)\}",
+                $url_pattern
             );
             
             return [
-                'url_pattern'    => $urlPattern,
-                'scalar_pattern' => $scalarPattern
+                'url_pattern'    => $url_pattern,
+                'scalar_pattern' => $scalar_pattern
             ];
     }
     
@@ -105,7 +105,7 @@ class Router {
     final public function execute () {
     	
     	# Locate the route, and instantiate the state
-    	$this->find_route();
+    	$this->findRoute();
     	
 		# Check that the state is set
 		if (!isset($this->state) or empty($this->state))
@@ -141,11 +141,11 @@ class Router {
             $this->state[$key] = $value; }
         
         # Reference super globals into State
-   	$this->state['SERVER']  = &$_SERVER;
-   	$this->state['FILES']   = &$_FILES;
-   	$this->state['COOKIE']  = &$_COOKIE;
-  	$this->state['SESSION'] = &$_SESSION;
-  	
-  	return true;
+   	    $this->state['SERVER']  = &$_SERVER;
+   	    $this->state['FILES']   = &$_FILES;
+        $this->state['COOKIE']  = &$_COOKIE;
+  	    $this->state['SESSION'] = &$_SESSION;
+  	    
+  	    return true;
     }
 }

@@ -1,6 +1,4 @@
-<?php declare(strict_types=1);
-
-namespace Velocious\core;
+<?php declare(strict_types=1); namespace Velocious\core;
 
 use Velocious\core\Exception;
 
@@ -11,8 +9,8 @@ class MimeTypes {
      * @param string $mime
      * @return bool
      */
-    public static function setMimeType (string $mimeType) : bool {
-        switch ($mimeType) {
+    public static function set_mime_type (string $mime_type) : bool {
+        switch ($mime_type) {
             case "json":
                 $mime = 'application/json';
                 break;
@@ -45,11 +43,11 @@ class MimeTypes {
     /**
      * Sets the appropriate document mime type via function call
      */
-    public static function json       () { self::setMimeType ("json");       }
-    public static function xml        () { self::setMimeType ("xml");        }
-    public static function html       () { self::setMimeType ("html");       }
-    public static function css        () { self::setMimeType ("css");        }
-    public static function javascript () { self::setMimeType ("javascript"); }
-    public static function text       () { self::setMimeType ("text");       }
-    public static function plain      () { self::setMimeType ("plain");      }
+    public static function json       () { self::set_mime_type ("json");       }
+    public static function xml        () { self::set_mime_type ("xml");        }
+    public static function html       () { self::set_mime_type ("html");       }
+    public static function css        () { self::set_mime_type ("css");        }
+    public static function javascript () { self::set_mime_type ("javascript"); }
+    public static function text       () { self::set_mime_type ("text");       }
+    public static function plain      () { self::set_mime_type ("plain");      }
 }

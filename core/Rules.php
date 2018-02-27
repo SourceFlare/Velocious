@@ -19,11 +19,11 @@ class Rules {
 			return true;
 		
 		# Check request type is on the allowed list for this route
-		if (!self::checkAllowedRequestTypes ($route['Rules']))
+		if (!self::check_alowed_request_types ($route['Rules']))
 			Exception::cast ("Incorrect request type for this route.", 405);
 		
 		# Check remote addr is on the allowed list
-		if (!self::checkAllowedRemoteAddr ($route['Rules']))
+		if (!self::check_alowed_remote_addr ($route['Rules']))
 			Exception::cast ("Access is forbidden.", 403);		
 	}
 
@@ -32,7 +32,7 @@ class Rules {
 	 * @param array $list
 	 * @return bool
 	 */
-	protected static function checkAllowedRequestTypes (array $rules) : bool {
+	protected static function check_alowed_request_types (array $rules) : bool {
 		
 		# If not set then return (skip)
 		if (!isset($rules['Allowed_Request_Types']))
@@ -49,7 +49,7 @@ class Rules {
 	 * @param array $list
 	 * @return bool
 	 */
-	protected static function checkAllowedRemoteAddr (array $rules) : bool {
+	protected static function check_alowed_remote_addr (array $rules) : bool {
 		
 		# If not set then skip
 		if (!isset($rules['Allowed_Remote_Addr']))

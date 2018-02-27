@@ -28,7 +28,18 @@ class Render {
         echo xmlrpc_encode ($data);
         return true;
     }
-    
+
+    /**
+     * Renders HTML
+     * @param string $html
+     * @return bool
+     */
+    public static function html (string $html) : bool {
+        MimeTypes::html();
+        echo $html;
+        return true;
+    }
+
     /**
      * Renders nominated file
      * @param string $json

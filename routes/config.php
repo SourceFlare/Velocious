@@ -1,66 +1,45 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types=1);  namespace Velocious\routes;
 
-namespace Velocious\routes;
-
+# Inject Dependencies
 use Velocious\core\Render;
 use Velocious\core\MimeTypes;
 use Velocious\core\Exception;
+use Velocious\config\Restricted;
+
 
 
 /**
  * Index Route - Serves up a static HTML files from
  * the ./html/ folder.
- */
+**/
 $route["/"] = [
-    
     "Rules" => [
-        "Allowed_Request_Types" => ["GET", "POST"],
-        "Allowed_Remote_Addr"   => ["localhost", "::1"]],
-    
+        "Allowed_Request_Types" => ["GET"],
+        "Allowed_Remote_Addr"   => Restricted::getRemoteAddresses(),
+        "Secure" => 0],
     "Controller"  => function (array $state) : bool {
-        return Render::file("./html/index.html", "html");
+        return Render::file("/public/Welcome.html", "html");
     }
 ];
 
 
-/**
- * Read a blog using url variable matching. The
- * variables in the url become available through
- * the $state[] variable passed into the closure.
- */
-$route["/blog/{page_id}/{blog_id}/"] = [
-
+$route["/controller-test/"] = [
     "Rules" => [
-        "Allowed_Request_Types" => ["GET", "POST"], 
-        "Allowed_Remote_Addr" => ["localhost", "::1"]],
-        
+        "Allowed_Request_Types" => ["GET"],
+        "Allowed_Remote_Addr"   => Restricted::getRemoteAddresses(),
+        "Secure" => 0],
     "Controller"  => function (array $state) : bool {
-        return Render::json([
-            'response' => [
-                'blog_page_id' => $state['page_id'],
-                'blog_id'      => $state['blog_id']
-            ]
-        ]);
+        return (new \Velocious\controllers\Application)->homePage();
     }
 ];
 
-
-/**
- * Now we use a service within a route to do 
- * some grunt work and pass to the client.
- */
-$route["/reverse-string/"] = [
-
+$route["/input-test/{text}/"] = [
     "Rules" => [
-        "Allowed_Request_Types" => ["POST"],
-        "Allowed_Remote_Addr"   => ["localhost", "::1"]],
-        
+        "Allowed_Request_Types" => ["GET"],
+        "Allowed_Remote_Addr"   => Restricted::getRemoteAddresses(),
+        "Secure" => 0],
     "Controller"  => function (array $state) : bool {
-        return Render::json([
-            'response' => [
-                'string'          => $state['my_string'],
-                'reversed_string' => (new \Velocious\services\ReverseString)->commit($state['my_string'])
-            ]
-        ]);
+        echo json_encode($state['text']);
+        return true;
     }
 ];
